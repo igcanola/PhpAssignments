@@ -31,6 +31,38 @@
  		    return $res;
 	  }
     
+     // Update customer data into customer table
+    public function updateRecord($fname, $email, $fphone, $faddress, $postal, $country, $id_person)
+    {
+      $query = "UPDATE detperson SET country = '$country', email = '$email', faddress = '$faddress', fname = '$fname', phone = '$fphone', postal_code = '$postal' WHERE id_person = '$id_person'";
+      $sql = mysqli_query($this->connection, $query);
+      if ($sql==true) {
+        header("Location:index.php?msg2=update");
+      }else{
+        echo "Registration updated failed try again!";
+      }
+    }
+
+    public function deleteRecord($id_person)
+    {
+      $query = "DELETE FROM detperson WHERE id_person = '$id_person'";
+      $sql = mysqli_query($this->connection, $query);
+      if ($sql==true) {
+        header("Location:access.php?msg3=delete");
+      }else{
+        echo "Record does not delete try again";
+      }
+    }
+
+    public function displayRecordById($id_person)
+    {
+      $query = "SELECT * FROM detperson WHERE id_person = '$id_person'";
+      $result = mysqli_query($this->connection, $query);
+      if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row;
+      }
+    }
   }
-  $database = new Database();
+  $rObj = new Database();
 ?>
